@@ -10,3 +10,7 @@ local function onPlayerAdded(player)
 end
 
 Players.PlayerAdded:Connect(onPlayerAdded)
+
+for _, player in Players:GetPlayers() do
+	onPlayerAdded(player)
+end
