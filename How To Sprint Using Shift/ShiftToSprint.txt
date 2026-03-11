@@ -1,0 +1,32 @@
+local player = game.Players.LocalPlayer
+local UserInputService = game:GetService("UserInputService")
+
+local walkSpeed = 16
+local sprintSpeed = 50
+
+local humanoid
+
+local function setupCharacter(character)
+	humanoid = character:WaitForChild("Humanoid")
+	humanoid.WalkSpeed = walkSpeed
+end
+
+if player.Character then
+	setupCharacter(player.Character)
+end
+
+player.CharacterAdded:Connect(setupCharacter)
+
+UserInputService.InputBegan:Connect(function(input, gameProcessed)
+	if gameProcessed then return end
+
+	if input.KeyCode == Enum.KeyCode.LeftShift and humanoid then
+		humanoid.WalkSpeed = sprintSpeed
+	end
+end)
+
+UserInputService.InputEnded:Connect(function(input)
+	if input.KeyCode == Enum.KeyCode.LeftShift and humanoid then
+		humanoid.WalkSpeed = walkSpeed
+	end
+end)
